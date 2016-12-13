@@ -1,9 +1,5 @@
-<pre>
 <?php
-
-
-
-
+	require_once('helper.php');
 // class Hello{
 	
 // 	public function tang($parameter){
@@ -13,21 +9,37 @@
 	
 // }
 
-
-	$get = $_GET['method'];
+	$method = $_GET['method'];
 	unset($_GET['method']);
 	require_once('routes.php');
+	$path = explode('/',$method);
 
+	
+	$controller = ($path[0])? $path[0] : 'main';
+	$function   = ($path[1])? $path[1] : 'index';
+	
+	$file = './controller/'.$controller.'.php';
 
-
-
-	foreach($routes as $pattern => $new_path){
-	$pattern = str_replace(':arg', '.+', $pattern);
-		if(preg_match('#^' . $pattern . '$#',$get)){
-			die('yes');
-			break;
+		if(file_exists($file)){
+			require_once($file);
+		}else{
+			$error = 100;
+			die('error');
 		}
-	}
+
+	$file = '';
+	$path = '';
+	$method = '';
+
+
+
+	// foreach($routes as $pattern => $new_path){
+	// $pattern = str_replace(':arg', '.+', $pattern);
+	// 	if(preg_match('#^' . $pattern . '$#',$get)){
+	// 		die('yes');
+	// 		break;
+	// 	}
+	// }
 
 
 // print_r($routes);
