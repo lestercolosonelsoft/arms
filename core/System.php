@@ -9,14 +9,14 @@
 	
 // }
 
-	$method = $_GET['method'];
-	unset($_GET['method']);
+	$method = isset($_GET['method']) ? $_GET['method'] : "main/index";
+
+	if($_GET['method']){
+
+	}
+	
 	require_once('routes.php');
 	$path = explode('/',$method);
-
-	
-	$controller = ($path[0])? $path[0] : 'main';
-	$function   = ($path[1])? $path[1] : 'index';
 	
 	$file = './controller/'.$controller.'.php';
 
